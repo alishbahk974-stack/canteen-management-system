@@ -38,7 +38,7 @@ own login. Handy for sharing one link per role:
 | `.../chef/` | Chef System page — explains the kitchen screen and the Accept → Preparing → Ready buttons, then chef login |
 | `.../pay.php?token=...` | The phone payment page (opened only by scanning the payment QR) |
 
-Example with XAMPP: `http://localhost/canteen%20management%20system/staff/`
+Example with XAMPP: `http://localhost/canteen/staff/`
 
 The home page (`index.php`) shows the three systems as cards — the user simply clicks
 the system they belong to. Each system has its own coloured theme (orange = student,
@@ -97,14 +97,30 @@ Nothing in this project needs an internet connection, a paid service or an API k
 1. **Install XAMPP** from <https://www.apachefriends.org> (any recent version).
 2. **Copy this project** into the XAMPP web folder:
    ```
-   C:\xampp\htdocs\canteen management system\
+   C:\xampp\htdocs\canteen\
    ```
    (On macOS/Linux it is usually `/opt/lampp/htdocs/`.)
 3. Open the **XAMPP Control Panel** and press **Start** for **Apache** and **MySQL**.
 4. You are ready — the website is now at:
    ```
-   http://localhost/canteen%20management%20system/
+   http://localhost/canteen/
    ```
+
+### Testing the QR phone payment with your phone
+
+The payment QR contains a link like `http://YOUR-PC-IP/canteen/pay.php?token=...`.
+For your phone to open that link, the phone and the computer must be on the **same
+WiFi**, and the computer must be opened with its **IP address** (not `localhost` —
+on a phone, `localhost` means the phone itself):
+
+1. Find your computer's IP: press `Win+R`, type `cmd`, run `ipconfig`,
+   look for **IPv4 Address** (e.g. `192.168.0.118`).
+2. Open the student system with that IP, e.g.
+   `http://192.168.0.118/canteen/student/`
+3. Place an order with **Online payment** — the payment QR now contains the IP
+   link, so scanning it with your phone really opens the payment page.
+4. No phone handy? Click **"Pay on this device (testing)"** under the QR — it
+   opens the same payment page in a new tab.
 
 ### Database connection settings
 
@@ -270,7 +286,7 @@ the last 7 days and the best selling items.
 ## 8. Project file structure
 
 ```
-canteen management system/
+canteen/
 ├── database/
 │   └── canteen_db.sql          ← creates and seeds the whole database
 ├── includes/
@@ -337,7 +353,7 @@ canteen management system/
 | Problem | Solution |
 |---------|----------|
 | *"Database not ready"* on every page | Start **MySQL** in XAMPP and import `database/canteen_db.sql` (step 4). |
-| Page cannot be found / CSS missing | Make sure the folder inside `htdocs` is named `canteen management system`, and open `http://localhost/canteen%20management%20system/`. |
+| Page cannot be found / CSS missing | Make sure the folder inside `htdocs` is named `canteen`, and open `http://localhost/canteen/`. |
 | *"Access denied for user 'root'"* | Put your MySQL password into `DB_PASS` in `includes/config.php`. |
 | The QR picture does not appear | The code is still printed in large text under it — type that code into the manager's *Verify Pickup* page. |
 | Everything looks unstyled | Press **Ctrl+F5** to reload the CSS without cache. |

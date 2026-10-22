@@ -17,3 +17,6 @@ Desktop.ini
 # The database password lives in includes/config.php, but for this
 # diploma project it is EMPTY (XAMPP default: root with no password),
 # so it is safe to keep that file in the repository.
+
+# Leftover from the XAMPP installer (cannot be deleted while Windows holds it)
+xampp-control.ini
