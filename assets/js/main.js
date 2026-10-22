@@ -51,23 +51,29 @@
    *    (open source, MIT licence). Nothing is sent to the internet.
    *    The text under the picture stays visible, so staff can also
    *    type the code in by hand.
+   *
+   *    EVERY element with a data-code attribute gets a QR picture,
+   *    so devices.php can show several QR codes on one page.
    * ------------------------------------------------------------------ */
-  var box = document.getElementById('qrcode');
-  if (box && typeof window.qrcode === 'function') {
-    var text = box.getAttribute('data-code') || '';
-    if (text) {
-      try {
-        var qr = window.qrcode(0, 'M'); // 0 = choose size automatically
-        qr.addData(text);
-        qr.make();
-        box.innerHTML = qr.createSvgTag({ cellSize: 5, margin: 2, scalable: true });
-        var svg = box.querySelector('svg');
-        if (svg) {
-          svg.setAttribute('style', 'width:100%;height:100%;display:block;');
+  var boxes = document.querySelectorAll('[data-code]');
+  if (boxes.length && typeof window.qrcode === 'function') {
+    for (var i = 0; i < boxes.length; i++) {
+      (function (box) {
+        var text = box.getAttribute('data-code') || '';
+        if (!text) { return; }
+        try {
+          var qr = window.qrcode(0, 'M'); // 0 = choose size automatically
+          qr.addData(text);
+          qr.make();
+          box.innerHTML = qr.createSvgTag({ cellSize: 5, margin: 2, scalable: true });
+          var svg = box.querySelector('svg');
+          if (svg) {
+            svg.setAttribute('style', 'width:100%;height:100%;display:block;');
+          }
+        } catch (error) {
+          /* Keep the text-only version, the code below the box is enough. */
         }
-      } catch (error) {
-        /* Keep the text-only version, the code below the box is enough. */
-      }
+      })(boxes[i]);
     }
   }
 
